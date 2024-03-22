@@ -22,4 +22,7 @@ public class User {
     private List<Post> posts;
 
 
+    public User() {
+
+    }
 }

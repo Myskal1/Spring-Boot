@@ -1,25 +1,31 @@
 package com.myskal.website.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import lombok.*;
 
 
 import java.util.List;
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@Entity
 
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "varchar(7)")
     private Long id;
+    @Column(length = 12)
     private String username;
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
-    @OneToMany
-    private List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 
 
     public User() {

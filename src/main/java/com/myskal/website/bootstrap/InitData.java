@@ -21,7 +21,17 @@ public class InitData implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        Post post1 = new Post();
+        post1.setTitle("First post");
+        post1.setContent("Spring");
+        postRepository.save(post1);
+
+        Post post2 = new Post();
+        post2.setTitle("Second Post");
+        post2.setContent("Spring boot");
+        postRepository.save(post2);
+
 
     }
 }

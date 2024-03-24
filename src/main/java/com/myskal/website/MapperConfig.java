@@ -17,6 +17,27 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MapperConfig {
+
+    @Bean
+    public UserService userService(UserRepository userRepository, UserMapper userMapper) {
+        return new UserServiceImpl(userRepository, userMapper) {
+            @Override
+            public UserDTO saveUser(UserDTO userDTO) {
+                return null;
+            }
+        };
+    }
+
+    @Bean
+    public PostService postService(PostRepository postRepository, PostMapper postMapper) {
+        return new PostServiceImpl(postRepository, postMapper) {
+            @Override
+            public PostDTO savePost(PostDTO postDTO) {
+                return null;
+            }
+        };
+    }
+
     @Bean
     public UserMapper userMapper() {
         return new UserMapper() {
@@ -48,24 +69,8 @@ public class MapperConfig {
         };
     }
 
-    @Bean
-    public PostService postService(PostRepository postRepository, PostMapper postMapper) {
-        return new PostServiceImpl(postRepository, postMapper) {
-            @Override
-            public PostDTO savePost(PostDTO postDTO) {
-                return null;
-            }
-        };
-    }
 
-    @Bean
-    public UserService userService(UserRepository userRepository, UserMapper userMapper) {
-        return new UserServiceImpl(userRepository, userMapper) {
-            @Override
-            public UserDTO saveUser(UserDTO userDTO) {
-                return null;
-            }
-        };
-    }
+
+
 }
 

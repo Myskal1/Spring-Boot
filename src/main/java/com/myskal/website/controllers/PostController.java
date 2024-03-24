@@ -3,9 +3,13 @@ package com.myskal.website.controllers;
 
 import com.myskal.website.DTO.PostDTO;
 import com.myskal.website.services.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,9 +33,10 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @PostMapping
-    public PostDTO createPost(@RequestBody PostDTO postDTO) {
-        return postService.createPost(postDTO);
+    @PostMapping("/posts")
+    public ResponseEntity<PostDTO> createPost(@Validated @RequestBody PostDTO newPost) {
+        PostDTO savedPost = postService.savePost(newPost);
+        return ResponseEntity.created(URI.create("/api/posts/" + savedPost.getId())).body(savedPost);
     }
 
     @PutMapping("/{id}")

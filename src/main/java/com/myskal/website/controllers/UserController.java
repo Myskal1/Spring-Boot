@@ -3,8 +3,11 @@ package com.myskal.website.controllers;
 import com.myskal.website.DTO.UserDTO;
 import com.myskal.website.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,10 +31,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
+    @PostMapping("/users")
+    public ResponseEntity<UserDTO> createUser(@Validated @RequestBody UserDTO newUser) {
+        UserDTO savedUser = userService.saveUser(newUser);
+        return ResponseEntity.created(URI.create("/api/users/" + savedUser.getId())).body(savedUser);
     }
+
 
     @PutMapping("/{id}")
     public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {

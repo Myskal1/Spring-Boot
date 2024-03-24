@@ -4,15 +4,14 @@ import com.myskal.website.DTO.PostDTO;
 import com.myskal.website.entities.Post;
 import com.myskal.website.mapper.PostMapper;
 import com.myskal.website.repositories.PostRepository;
-import com.myskal.website.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PostServiceImpl implements PostService {
-
+public abstract class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;

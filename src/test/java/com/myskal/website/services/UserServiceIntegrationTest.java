@@ -32,7 +32,7 @@ public class UserServiceIntegrationTest {
         User user = new User();
         user.setId(1L);
         user.setUsername("testUser");
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
 
         UserDTO userDTO = userService.getUserById(1L);
 

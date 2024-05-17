@@ -18,7 +18,7 @@ public class UserDTO {
     @EqualsAndHashCode.Include
     private Long id;
     private String username;
-
+    private String email;
     private Set<PostDTO> posts;
 
 }

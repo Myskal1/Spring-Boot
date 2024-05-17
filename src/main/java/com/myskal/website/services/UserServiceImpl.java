@@ -1,45 +1,43 @@
 package com.myskal.website.services;
 
 import com.myskal.website.DTO.UserDTO;
+import com.myskal.website.DTO.UserRequest;
 import com.myskal.website.entities.User;
 import com.myskal.website.mapper.UserMapper;
 import com.myskal.website.repositories.UserRepository;
-import com.myskal.website.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
-
-public abstract class UserServiceImpl implements UserService {
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
+    @Override
+    public UserDTO getUserById(Long id) {
+        return null;
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return userMapper.userToUserDTO(user);
+    public UserDTO saveUser(UserDTO userDTO) {
+        return null;
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
-                .map(userMapper::userToUserDTO)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO createUser(UserDTO userDTO) throws UsernameAlreadyExistsException {
+        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username already exists");
+        }
         User user = userMapper.userDTOToUser(userDTO);
         user = userRepository.save(user);
         return userMapper.userToUserDTO(user);
@@ -47,16 +45,26 @@ public abstract class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        existingUser.setUsername(userDTO.getUsername());
-        existingUser = userRepository.save(existingUser);
-        return userMapper.userToUserDTO(existingUser);
+        return null;
     }
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void save(User user) {
+
+    }
+
+    @Override
+    public void registerUser(UserRequest userRequest) {
+
     }
 }
-

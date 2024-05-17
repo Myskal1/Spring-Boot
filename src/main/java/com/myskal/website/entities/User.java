@@ -7,12 +7,14 @@ import lombok.*;
 
 
 import java.util.List;
-@AllArgsConstructor
-@Builder
+
+@Entity
 @Getter
 @Setter
-@Entity
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 public class User {
     @Id
@@ -23,12 +25,16 @@ public class User {
     private String username;
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
+    private String email;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<>();
-
-
-    public User() {
-
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    private boolean verified;
+
+    @Builder.Default
+    private String role = "USER";
+
+
 }
